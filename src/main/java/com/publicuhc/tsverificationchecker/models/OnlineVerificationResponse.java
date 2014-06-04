@@ -9,6 +9,13 @@ public class OnlineVerificationResponse extends VerificationResponse {
 
     private List<String> m_online;
 
+    public OnlineVerificationResponse() {}
+
+    public OnlineVerificationResponse(VerificationResponse response) {
+        setAuthentications(response.getAuthentications());
+        setVerified(response.isVerified());
+    }
+
     /**
      * @return A list of teamspeak UUIDs that are online
      */
