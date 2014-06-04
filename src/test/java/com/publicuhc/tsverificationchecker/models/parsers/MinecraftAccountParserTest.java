@@ -26,7 +26,7 @@ public class MinecraftAccountParserTest {
 
     @Before
     public void onStartUp() throws ParseException {
-        parser = new MinecraftAccountParser(new RFC2822DateParser(), new MinecraftUUIDParser());
+        parser = new MinecraftAccountParser(new APIModelParser(new RFC2822DateParser()), new MinecraftUUIDParser());
         createdAt = dateParser.parseDate(createdAtString);
         updatedAt = dateParser.parseDate(updatedAtString);
     }
