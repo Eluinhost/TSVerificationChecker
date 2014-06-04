@@ -10,25 +10,16 @@ import java.net.URL;
 
 public class URLFetcher {
 
-    private final URL m_fetchURL;
-
-    /**
-     * Fetches the data from the URL
-     * @param url the URL to fetch from
-     */
-    public URLFetcher(URL url) {
-        m_fetchURL = url;
-    }
-
     /**
      * Fetch the raw string from the URL
      * @return String version of the contents
      * @throws FetchException
      */
-    public String fetch() throws FetchException {
+    public String fetch(String urlString) throws FetchException {
         InputStream inputStream = null;
         try {
-            inputStream = m_fetchURL.openStream();
+            URL url = new URL(urlString);
+            inputStream = url.openStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
             StringBuilder jsonStringBuilder = new StringBuilder();
