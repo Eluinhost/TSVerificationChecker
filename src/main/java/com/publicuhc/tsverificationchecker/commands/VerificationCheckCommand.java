@@ -47,12 +47,20 @@ public class VerificationCheckCommand implements TabExecutor {
 
             final HashMap<UUID, String> players = new HashMap<UUID, String>();
 
-            for(int i = 1; i < args.length - 1; i++) {
-                Player player = Bukkit.getPlayer(args[i]);
-                if(player == null) {
-                    continue;
+            if(args[1].equals("*")) {
+                Player[] onlinePlayers = Bukkit.getOnlinePlayers();
+                for(Player p : onlinePlayers) {
+                    players.put(p.getUniqueId(), p.getName());
                 }
-                players.put(player.getUniqueId(), player.getName());
+            } else {
+                for (int i = 1; i < args.length - 1; i++) {
+                    Player player = Bukkit.getPlayer(args[i]);
+                    if (player == null) {
+                        sender.sendMessage(ChatColor.RED + "Unknown player: " + args[i]);
+                        continue;
+                    }
+                    players.put(player.getUniqueId(), player.getName());
+                }
             }
 
             Bukkit.getScheduler().runTaskAsynchronously(
@@ -64,6 +72,7 @@ public class VerificationCheckCommand implements TabExecutor {
                         onlineCheck
                     )
             );
+            return true;
         }
         return false;
     }
