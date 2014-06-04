@@ -1,36 +1,48 @@
 package com.publicuhc.tsverificationchecker;
 
+import com.publicuhc.tsverificationchecker.exceptions.FetchException;
+import com.publicuhc.tsverificationchecker.models.OnlineVerificationResponse;
+import com.publicuhc.tsverificationchecker.models.VerificationResponse;
 import org.bukkit.entity.Player;
 
+import java.text.ParseException;
 import java.util.UUID;
 
 public interface VerificationChecker {
 
     /**
-     * Check if the player is verified
+     * Get the response for the given player
      * @param player the player to check
-     * @return true if verified, false if not
+     * @return the response
+     * @throws FetchException if fetching from the api failed
+     * @throws ParseException if parse the repsonse failed
      */
-    boolean playerVerified(Player player);
+    VerificationResponse getVerificationResponseForPlayer(Player player) throws FetchException, ParseException;
 
     /**
-     * Check if the player with the given UUID is verified
-     * @param playerUUID the UUID to check
-     * @return true if verified, false if not
-     */
-    boolean playerVerified(UUID playerUUID);
-
-    /**
-     * Check if the player is online in TS
+     * Get the response for the given player, including online UUIDs
      * @param player the player to check
-     * @return true if online, false if not or if not verified
+     * @return the response
+     * @throws FetchException if fetching from the api failed
+     * @throws ParseException if parse the repsonse failed
      */
-    boolean playerOnline(Player player);
+    OnlineVerificationResponse getOnlineVerificationResponseForPlayer(Player player) throws FetchException, ParseException;
 
     /**
-     * Check if the player is online in TS
-     * @param playerUUID the UUID of the player to check
-     * @return true if online, false if not or if not verified
+     * Get the response for the given player UUID
+     * @param uuid the uuid of the player to check
+     * @return the response
+     * @throws FetchException if fetching from the api failed
+     * @throws ParseException if parse the repsonse failed
      */
-    boolean playerOnline(UUID playerUUID);
+    VerificationResponse getVerificationResponseForUUID(UUID uuid) throws FetchException, ParseException;
+
+    /**
+     * Get the response for the given player uuid, including online UUIDs
+     * @param uuid the player uuid to check
+     * @return the response
+     * @throws FetchException if fetching from the api failed
+     * @throws ParseException if parse the repsonse failed
+     */
+    OnlineVerificationResponse getOnlineVerificationResponseForUUID(UUID uuid) throws FetchException, ParseException;
 }
