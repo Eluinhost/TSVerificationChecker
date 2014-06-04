@@ -1,7 +1,7 @@
 package com.publicuhc.tsverificationchecker;
 
 import com.publicuhc.tsverificationchecker.exceptions.FetchException;
-import com.publicuhc.tsverificationchecker.fetchers.URLFetcher;
+import com.publicuhc.tsverificationchecker.fetchers.APIFetcher;
 import com.publicuhc.tsverificationchecker.models.OnlineVerificationResponse;
 import com.publicuhc.tsverificationchecker.models.VerificationResponse;
 import com.publicuhc.tsverificationchecker.models.parsers.VerificationResponseParser;
@@ -15,14 +15,12 @@ import java.util.UUID;
 
 public class DefaultVerificationChecker implements VerificationChecker {
 
-    private final URLFetcher m_verifiedURLFetcher;
-    private final URLFetcher m_onlineURLFetcher;
+    private final APIFetcher m_apiFetcher;
     private final VerificationResponseParser m_parser;
     private final JSONParser m_jsonParser;
 
-    public DefaultVerificationChecker(URLFetcher verifiedURL, URLFetcher onlineURL, VerificationResponseParser parser, JSONParser jsonParser) {
-        m_verifiedURLFetcher = verifiedURL;
-        m_onlineURLFetcher = onlineURL;
+    public DefaultVerificationChecker(APIFetcher apiFetcher, VerificationResponseParser parser, JSONParser jsonParser) {
+        m_apiFetcher = apiFetcher;
         m_parser = parser;
         m_jsonParser = jsonParser;
     }
@@ -40,7 +38,7 @@ public class DefaultVerificationChecker implements VerificationChecker {
     @SuppressWarnings("unchecked")
     @Override
     public VerificationResponse getVerificationResponseForUUID(UUID uuid) throws FetchException, ParseException {
-        String urlContents = m_verifiedURLFetcher.fetch();
+        String urlContents = m_apiFetcher.fetchVerified(uuid);
         try {
             Object parsedJSON = m_jsonParser.parse(urlContents);
             if(parsedJSON == null || !(parsedJSON instanceof Map)) {
@@ -57,7 +55,7 @@ public class DefaultVerificationChecker implements VerificationChecker {
     @SuppressWarnings("unchecked")
     @Override
     public OnlineVerificationResponse getOnlineVerificationResponseForUUID(UUID uuid) throws FetchException, ParseException {
-        String urlContents = m_onlineURLFetcher.fetch();
+        String urlContents = m_apiFetcher.fetchOnline(uuid);
         try {
             Object parsedJSON = m_jsonParser.parse(urlContents);
             if(parsedJSON == null || !(parsedJSON instanceof Map)) {
