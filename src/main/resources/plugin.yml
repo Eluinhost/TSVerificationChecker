@@ -7,8 +7,8 @@ database: false
 commands:
   tsverify:
     description: Check verification/online status of a player/s
-      usage: /<command true/false player1 player2 player3 ... OR /<command> true/false *
-      aliases: [tsverifycheck]
+    usage: /<command true/false player1 player2 player3 ... OR /<command> true/false *
+    aliases: [tsverifycheck]
 permissions:
   tsverify.command:
     description: Allows use of the tsverify command
