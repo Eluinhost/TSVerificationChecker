@@ -1,0 +1,6 @@
+name: TSVerificationChecker
+main: com.publicuhc.tsverificationchecker.VerificationCheckerPlugin
+version: 1.0
+description: Check if players are verified/online in Teamspeak
+author: ghowden/Eluinhost
+database: false
