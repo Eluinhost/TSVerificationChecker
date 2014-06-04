@@ -28,7 +28,7 @@ public class AuthenticationParser {
      * <p>teamspeakAccount: A teamspeak account object to be parsed</p>
      * </code>
      * @param map the map to parse
-     * @return A parsed MinecraftAccount
+     * @return A parsed Authentication
      * @throws java.text.ParseException on failing to parse the map
      */
     @SuppressWarnings("unchecked")
