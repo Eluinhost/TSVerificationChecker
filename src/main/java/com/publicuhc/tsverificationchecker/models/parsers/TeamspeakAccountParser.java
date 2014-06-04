@@ -7,11 +7,9 @@ import java.util.Map;
 
 public class TeamspeakAccountParser {
 
-    private final DateParser m_dateParser;
     private final APIModelParser m_modelParser;
 
-    public TeamspeakAccountParser(DateParser dateParser, APIModelParser modelParser) {
-        m_dateParser = dateParser;
+    public TeamspeakAccountParser(APIModelParser modelParser) {
         m_modelParser = modelParser;
     }
 
