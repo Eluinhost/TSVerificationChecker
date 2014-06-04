@@ -30,7 +30,7 @@ public class MinecraftAccountParser {
     public MinecraftAccount parse(Map<String, Object> map) throws ParseException {
         Object uuidObject = map.get("uuid");
         if(uuidObject == null || !(uuidObject instanceof String)) {
-            throw new ParseException("UUID doesn't contain a valid UUID node", 0);
+            throw new ParseException("Minecraft account doesn't contain a valid UUID node", 0);
         }
         UUID uuid = m_uuidParser.parseUUID((String) uuidObject);
 
