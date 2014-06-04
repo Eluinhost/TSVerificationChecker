@@ -1,6 +1,5 @@
 package com.publicuhc.tsverificationchecker.models;
 
-import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -8,17 +7,17 @@ import java.util.UUID;
  */
 public class MinecraftAccount extends APIModel {
 
-    private final UUID m_mcUUID;
-
-    public MinecraftAccount(UUID mcUUID, Date createdAt, Date updatedAt) {
-        super(createdAt, updatedAt);
-        m_mcUUID = mcUUID;
-    }
+    private UUID m_mcUUID;
 
     /**
      * @return the UUID for the account
      */
     public UUID getUUID() {
         return m_mcUUID;
+    }
+
+    public MinecraftAccount setUUID(UUID uuid) {
+        m_mcUUID = uuid;
+        return this;
     }
 }

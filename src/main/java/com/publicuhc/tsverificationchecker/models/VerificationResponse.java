@@ -10,11 +10,6 @@ public class VerificationResponse {
     private boolean m_verified;
     private List<Authentication> m_authentications;
 
-    public VerificationResponse(boolean verified, List<Authentication> authentications) {
-        m_verified = verified;
-        m_authentications = authentications;
-    }
-
     /**
      * @return if the minecraft account is verified
      */
@@ -27,5 +22,15 @@ public class VerificationResponse {
      */
     public List<Authentication> getAuthentications() {
         return m_authentications;
+    }
+
+    public VerificationResponse setVerified(boolean verified) {
+        m_verified = verified;
+        return this;
+    }
+
+    public VerificationResponse setAuthentications(List<Authentication> authentications) {
+        m_authentications = authentications;
+        return this;
     }
 }

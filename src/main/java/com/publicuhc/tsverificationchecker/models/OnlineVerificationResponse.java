@@ -7,17 +7,17 @@ import java.util.List;
  */
 public class OnlineVerificationResponse extends VerificationResponse {
 
-    private final List<String> m_online;
-
-    public OnlineVerificationResponse(boolean verified, List<Authentication> authentications, List<String> onlineUUIDs) {
-        super(verified, authentications);
-        m_online = onlineUUIDs;
-    }
+    private List<String> m_online;
 
     /**
      * @return A list of teamspeak UUIDs that are online
      */
     public List<String> getOnlineUUIDs() {
         return m_online;
+    }
+
+    public OnlineVerificationResponse setOnlineUUIDs(List<String> uuids) {
+        m_online = uuids;
+        return this;
     }
 }

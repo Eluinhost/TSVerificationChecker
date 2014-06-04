@@ -1,17 +1,9 @@
 package com.publicuhc.tsverificationchecker.models;
 
-import java.util.Date;
-
 public class Authentication extends APIModel {
 
-    private final MinecraftAccount m_mcAccount;
-    private final TeamspeakAccount m_tsAccount;
-
-    public Authentication(MinecraftAccount mcAccount, TeamspeakAccount tsAccount, Date createdAt, Date updatedAt) {
-        super(createdAt, updatedAt);
-        m_mcAccount = mcAccount;
-        m_tsAccount = tsAccount;
-    }
+    private MinecraftAccount m_mcAccount;
+    private TeamspeakAccount m_tsAccount;
 
     /**
      * @return the minecraft account for this authentication
@@ -25,5 +17,15 @@ public class Authentication extends APIModel {
      */
     public TeamspeakAccount getTeamspeakAccount() {
         return m_tsAccount;
+    }
+
+    public Authentication setMinecraftAccount(MinecraftAccount account) {
+        m_mcAccount = account;
+        return this;
+    }
+
+    public Authentication setTeamspeakAccount(TeamspeakAccount account) {
+        m_tsAccount = account;
+        return this;
     }
 }

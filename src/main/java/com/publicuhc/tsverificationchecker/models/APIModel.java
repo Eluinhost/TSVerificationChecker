@@ -7,13 +7,8 @@ import java.util.Date;
  */
 public class APIModel {
 
-    private final Date m_createdAt;
-    private final Date m_updatedAt;
-
-    public APIModel(Date createdAt, Date updatedAt) {
-        m_createdAt = createdAt;
-        m_updatedAt = updatedAt;
-    }
+    private Date m_createdAt;
+    private Date m_updatedAt;
 
     public Date getUpdatedAt() {
         return m_updatedAt;
@@ -21,5 +16,15 @@ public class APIModel {
 
     public Date getCreatedAt() {
         return m_createdAt;
+    }
+
+    public APIModel setUpdatedAt(Date date) {
+        m_updatedAt = date;
+        return this;
+    }
+
+    public APIModel setCreatedAt(Date date) {
+        m_createdAt = date;
+        return this;
     }
 }
