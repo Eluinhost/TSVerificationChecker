@@ -26,7 +26,7 @@ public class TeamspeakAccountParserTest {
 
     @Before
     public void onStartUp() throws ParseException {
-        parser = new TeamspeakAccountParser(new RFC2822DateParser());
+        parser = new TeamspeakAccountParser(new APIModelParser(new RFC2822DateParser()));
         createdAt = dateParser.parseDate(createdAtString);
         updatedAt = dateParser.parseDate(updatedAtString);
     }
