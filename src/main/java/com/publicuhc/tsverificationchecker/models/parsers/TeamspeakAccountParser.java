@@ -22,7 +22,7 @@ public class TeamspeakAccountParser {
      * <p>uuid: Teamspeak UUID</p>
      * </code>
      * @param map the map to parse
-     * @return A parsed MinecraftAccount
+     * @return A parsed TeamspeakAccount
      * @throws java.text.ParseException on failing to parse the map
      */
     public TeamspeakAccount parse(Map<String, Object> map) throws ParseException {
