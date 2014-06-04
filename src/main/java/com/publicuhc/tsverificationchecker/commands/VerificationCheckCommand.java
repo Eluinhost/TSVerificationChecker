@@ -53,7 +53,7 @@ public class VerificationCheckCommand implements TabExecutor {
                     players.put(p.getUniqueId(), p.getName());
                 }
             } else {
-                for (int i = 1; i < args.length - 1; i++) {
+                for (int i = 1; i < args.length; i++) {
                     Player player = Bukkit.getPlayer(args[i]);
                     if (player == null) {
                         sender.sendMessage(ChatColor.RED + "Unknown player: " + args[i]);
