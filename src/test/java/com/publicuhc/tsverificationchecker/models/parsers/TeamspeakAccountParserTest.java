@@ -7,7 +7,6 @@ import org.junit.runner.RunWith;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.text.ParseException;
-import java.util.Date;
 import java.util.HashMap;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -17,24 +16,19 @@ public class TeamspeakAccountParserTest {
 
     private TeamspeakAccountParser parser;
 
-    private final String createdAtString = "Thu, 29 May 2014 18:08:48 +0000";
-    private final String updatedAtString = "Tue, 03 Jun 2014 13:32:10 +0000";
-    private final DateParser dateParser = new RFC2822DateParser();
     private final String uuid = "ewo4M0KT59ifNUKEV/FHEqoFCI4=";
-    private Date createdAt;
-    private Date updatedAt;
+    private final long createdAt = 1415440923;
+    private final long updatedAt = 1415540923;
 
     @Before
     public void onStartUp() throws ParseException {
-        parser = new TeamspeakAccountParser(new APIModelParser(new RFC2822DateParser()));
-        createdAt = dateParser.parseDate(createdAtString);
-        updatedAt = dateParser.parseDate(updatedAtString);
+        parser = new TeamspeakAccountParser(new APIModelParser());
     }
 
     private HashMap<String, Object> getValidMap() {
         HashMap<String, Object> account = new HashMap<String, Object>();
-        account.put("createdAt", createdAtString);
-        account.put("updatedAt", updatedAtString);
+        account.put("createdAt", createdAt);
+        account.put("updatedAt", updatedAt);
         account.put("uuid", uuid);
         return account;
     }
@@ -44,8 +38,8 @@ public class TeamspeakAccountParserTest {
         TeamspeakAccount tsAccount = parser.parse(getValidMap());
 
         assertThat(tsAccount.getUUID().toLowerCase()).isEqualTo(uuid.toLowerCase());
-        assertThat(tsAccount.getCreatedAt()).isEqualTo(createdAt);
-        assertThat(tsAccount.getUpdatedAt()).isEqualTo(updatedAt);
+        assertThat(tsAccount.getCreatedAt().getTime()).isEqualTo(createdAt);
+        assertThat(tsAccount.getUpdatedAt().getTime()).isEqualTo(updatedAt);
     }
 
     @Test(expected = ParseException.class)

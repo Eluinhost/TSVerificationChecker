@@ -7,7 +7,6 @@ import org.junit.runner.RunWith;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.text.ParseException;
-import java.util.Date;
 import java.util.HashMap;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -17,24 +16,19 @@ public class MinecraftAccountParserTest {
 
     private MinecraftAccountParser parser;
 
-    private final String createdAtString = "Thu, 29 May 2014 18:08:48 +0000";
-    private final String updatedAtString = "Tue, 03 Jun 2014 13:32:10 +0000";
-    private final DateParser dateParser = new RFC2822DateParser();
     private final String uuid = "6ac803fd-132f-4540-a741-cb18ffeed8ce";
-    private Date createdAt;
-    private Date updatedAt;
+    private final long createdAt = 1415440923;
+    private final long updatedAt = 1415540923;
 
     @Before
     public void onStartUp() throws ParseException {
-        parser = new MinecraftAccountParser(new APIModelParser(new RFC2822DateParser()), new MinecraftUUIDParser());
-        createdAt = dateParser.parseDate(createdAtString);
-        updatedAt = dateParser.parseDate(updatedAtString);
+        parser = new MinecraftAccountParser(new APIModelParser(), new MinecraftUUIDParser());
     }
 
     private HashMap<String, Object> getValidMap() {
         HashMap<String, Object> account = new HashMap<String, Object>();
-        account.put("createdAt", createdAtString);
-        account.put("updatedAt", updatedAtString);
+        account.put("createdAt", createdAt);
+        account.put("updatedAt", updatedAt);
         account.put("uuid", uuid);
         return account;
     }
@@ -44,8 +38,8 @@ public class MinecraftAccountParserTest {
         MinecraftAccount mcAccount = parser.parse(getValidMap());
 
         assertThat(mcAccount.getUUID().toString().toLowerCase()).isEqualTo(uuid.toLowerCase());
-        assertThat(mcAccount.getCreatedAt()).isEqualTo(createdAt);
-        assertThat(mcAccount.getUpdatedAt()).isEqualTo(updatedAt);
+        assertThat(mcAccount.getCreatedAt().getTime()).isEqualTo(createdAt);
+        assertThat(mcAccount.getUpdatedAt().getTime()).isEqualTo(updatedAt);
     }
 
     @Test(expected = ParseException.class)

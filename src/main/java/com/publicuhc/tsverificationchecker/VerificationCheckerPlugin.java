@@ -10,8 +10,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.json.simple.parser.JSONParser;
 
-import java.net.URL;
-
 public class VerificationCheckerPlugin extends JavaPlugin {
 
     @Override
@@ -23,8 +21,7 @@ public class VerificationCheckerPlugin extends JavaPlugin {
 
         APIFetcher apiFetcher = new APIFetcher(new URLFetcher(), configuration.getString("baseURL"));
 
-        DateParser dateParser = new RFC2822DateParser();
-        APIModelParser modelParser = new APIModelParser(dateParser);
+        APIModelParser modelParser = new APIModelParser();
         MinecraftUUIDParser uuidParser = new MinecraftUUIDParser();
         MinecraftAccountParser mcAccountParser = new MinecraftAccountParser(modelParser, uuidParser);
         TeamspeakAccountParser tsAccountParser = new TeamspeakAccountParser(modelParser);
