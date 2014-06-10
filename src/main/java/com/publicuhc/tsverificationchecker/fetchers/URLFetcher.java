@@ -47,8 +47,7 @@ public class URLFetcher {
 
             String urlParameters = buildParameterString(parameters);
 
-            connection.setRequestProperty("Content-Length", "" +
-                    Integer.toString(urlParameters.getBytes().length));
+            connection.setRequestProperty("Content-Length", Integer.toString(urlParameters.getBytes().length));
             connection.setRequestProperty("Content-Language", "en-US");
             connection.setUseCaches(false);
             connection.setDoInput(true);
@@ -69,6 +68,7 @@ public class URLFetcher {
             rd.close();
             return response.toString();
         } catch (Exception ex) {
+            ex.printStackTrace();
             throw new FetchException();
         } finally {
             if(connection != null) {
