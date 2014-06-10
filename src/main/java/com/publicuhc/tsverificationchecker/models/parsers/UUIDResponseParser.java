@@ -66,6 +66,6 @@ public class UUIDResponseParser {
             authentications.add(m_authenticationParser.parseAuthentication(authenticationMap));
         }
 
-        return new UUIDResponse().setAuthentications(authentications).setMinecraftAccount(mcAccount);
+        return new UUIDResponse().setAuthentications(authentications).setMinecraftAccount(mcAccount).setIsVerified(true);
     }
 }
