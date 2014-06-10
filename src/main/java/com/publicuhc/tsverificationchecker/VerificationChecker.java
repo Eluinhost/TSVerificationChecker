@@ -13,36 +13,20 @@ public interface VerificationChecker {
     /**
      * Get the response for the given player
      * @param players the players to check
+     * @param checkOnline return online status too
      * @return the response
      * @throws FetchException if fetching from the api failed
      * @throws ParseException if parse the repsonse failed
      */
-    VerificationResponse getVerificationResponseForPlayers(List<Player> players) throws FetchException, ParseException;
-
-    /**
-     * Get the response for the given player, including online UUIDs
-     * @param players the players to check
-     * @return the response
-     * @throws FetchException if fetching from the api failed
-     * @throws ParseException if parse the repsonse failed
-     */
-    VerificationResponse getOnlineVerificationResponseForPlayers(List<Player> players) throws FetchException, ParseException;
+    VerificationResponse getVerificationResponseForPlayers(List<Player> players, boolean checkOnline) throws FetchException, ParseException;
 
     /**
      * Get the response for the given player UUID
      * @param uuids the uuid of the player to check
+     * @param checkOnline return online status too
      * @return the response
      * @throws FetchException if fetching from the api failed
      * @throws ParseException if parse the repsonse failed
      */
-    VerificationResponse getVerificationResponseForUUIDs(List<UUID> uuids) throws FetchException, ParseException;
-
-    /**
-     * Get the response for the given player uuid, including online UUIDs
-     * @param uuids the player uuids to check
-     * @return the response
-     * @throws FetchException if fetching from the api failed
-     * @throws ParseException if parse the repsonse failed
-     */
-    VerificationResponse getOnlineVerificationResponseForUUIDs(List<UUID> uuids) throws FetchException, ParseException;
+    VerificationResponse getVerificationResponseForUUIDs(List<UUID> uuids, boolean checkOnline) throws FetchException, ParseException;
 }
