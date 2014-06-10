@@ -1,8 +1,6 @@
 package com.publicuhc.tsverificationchecker.fetchers;
 
 import com.publicuhc.tsverificationchecker.exceptions.FetchException;
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +19,7 @@ public class APIFetcher {
     public String fetchVerified(List<UUID> uuids, boolean checkOnline) throws FetchException {
         List<NameValuePair> parameters = new ArrayList<NameValuePair>();
         for(UUID uuid : uuids) {
-            parameters.add(new BasicNameValuePair("uuids[]", uuid.toString().replaceAll("-", "")));
+            parameters.add(new NameValuePair("uuids[]", uuid.toString().replaceAll("-", "")));
         }
         return m_fetcher.fetch(m_baseURL + "/api/" + (checkOnline ? "online" : "verified"), parameters);
     }
