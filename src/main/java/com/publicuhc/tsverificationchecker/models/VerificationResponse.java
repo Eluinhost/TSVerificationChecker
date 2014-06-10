@@ -1,36 +1,21 @@
 package com.publicuhc.tsverificationchecker.models;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * Response from the API for verified checks for minecraft UUIDs
  */
 public class VerificationResponse {
 
-    private boolean m_verified;
-    private List<Authentication> m_authentications;
+    private HashMap<UUID, UUIDResponse> m_responses;
 
-    /**
-     * @return if the minecraft account is verified
-     */
-    public boolean isVerified() {
-        return m_verified;
+    public HashMap<UUID, UUIDResponse> getResponseMap() {
+        return m_responses;
     }
 
-    /**
-     * @return all the authentications attributed to the account
-     */
-    public List<Authentication> getAuthentications() {
-        return m_authentications;
-    }
-
-    public VerificationResponse setVerified(boolean verified) {
-        m_verified = verified;
-        return this;
-    }
-
-    public VerificationResponse setAuthentications(List<Authentication> authentications) {
-        m_authentications = authentications;
+    public VerificationResponse setResponseMap(HashMap<UUID, UUIDResponse> map) {
+        m_responses = map;
         return this;
     }
 }
