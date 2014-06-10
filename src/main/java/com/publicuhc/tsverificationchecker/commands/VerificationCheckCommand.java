@@ -63,6 +63,11 @@ public class VerificationCheckCommand implements TabExecutor {
                 }
             }
 
+            if(players.size() == 0) {
+                sender.sendMessage(ChatColor.RED + "Must supply at least 1 online player");
+                return true;
+            }
+
             Bukkit.getScheduler().runTaskAsynchronously(
                     m_plugin,
                     new AsyncVerificationCheck(
@@ -72,6 +77,7 @@ public class VerificationCheckCommand implements TabExecutor {
                         onlineCheck
                     )
             );
+
             return true;
         }
         return false;
