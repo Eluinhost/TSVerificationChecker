@@ -22,6 +22,7 @@ public class MinecraftAccountParser {
      * <p>createdAt: RFC2822 time</p>
      * <p>updatedAt: RFC2822 time</p>
      * <p>uuid: Minecraft UUID (without -)</p>
+     * <p>lastName: String</p>
      * </code>
      * @param map the map to parse
      * @return A parsed MinecraftAccount
@@ -34,7 +35,13 @@ public class MinecraftAccountParser {
         }
         UUID uuid = m_uuidParser.parseUUID((String) uuidObject);
 
-        MinecraftAccount account = new MinecraftAccount().setUUID(uuid);
+        Object lastNameObject = map.get("lastName");
+        if(lastNameObject == null || !(lastNameObject instanceof String)) {
+            throw new ParseException("Teamspeak account doesn't contain a valid last name node", 0);
+        }
+        String lastName = (String) lastNameObject;
+
+        MinecraftAccount account = new MinecraftAccount().setUUID(uuid).setLastName(lastName);
         m_modelParser.addParsedDataToModel(map, account);
 
         return account;
