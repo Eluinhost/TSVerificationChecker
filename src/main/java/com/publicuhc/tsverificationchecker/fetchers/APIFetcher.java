@@ -1,7 +1,11 @@
 package com.publicuhc.tsverificationchecker.fetchers;
 
 import com.publicuhc.tsverificationchecker.exceptions.FetchException;
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class APIFetcher {
@@ -14,11 +18,11 @@ public class APIFetcher {
         m_baseURL = baseURL;
     }
 
-    public String fetchVerified(UUID uuid) throws FetchException {
-        return m_fetcher.fetch(m_baseURL + "/api/verified/" + uuid.toString().replaceAll("-", ""));
-    }
-
-    public String fetchOnline(UUID uuid) throws FetchException {
-        return m_fetcher.fetch(m_baseURL + "/api/online/" + uuid.toString().replaceAll("-", ""));
+    public String fetchVerified(List<UUID> uuids, boolean checkOnline) throws FetchException {
+        List<NameValuePair> parameters = new ArrayList<NameValuePair>();
+        for(UUID uuid : uuids) {
+            parameters.add(new BasicNameValuePair("uuids[]", uuid.toString().replaceAll("-", "")));
+        }
+        return m_fetcher.fetch(m_baseURL + "/api/" + (checkOnline ? "online" : "verified"), parameters);
     }
 }

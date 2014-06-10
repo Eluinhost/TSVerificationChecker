@@ -21,15 +21,17 @@ public class VerificationCheckerPlugin extends JavaPlugin {
 
         APIFetcher apiFetcher = new APIFetcher(new URLFetcher(), configuration.getString("baseURL"));
 
+        //set up all the parsers
         APIModelParser modelParser = new APIModelParser();
-        MinecraftUUIDParser uuidParser = new MinecraftUUIDParser();
-        MinecraftAccountParser mcAccountParser = new MinecraftAccountParser(modelParser, uuidParser);
         TeamspeakAccountParser tsAccountParser = new TeamspeakAccountParser(modelParser);
-        AuthenticationParser authenticationParser = new AuthenticationParser(modelParser, mcAccountParser, tsAccountParser);
-        VerificationResponseParser verificationResponseParser = new VerificationResponseParser(authenticationParser);
+        AuthenticationParser authenticationParser = new AuthenticationParser(modelParser, tsAccountParser);
+        MinecraftUUIDParser uuidParser = new MinecraftUUIDParser();
+        UUIDResponseParser uuidResponseParser = new UUIDResponseParser(new MinecraftAccountParser(modelParser, uuidParser), authenticationParser);
+        VerificationResponseParser verificationResponseParser = new VerificationResponseParser(uuidResponseParser, uuidParser);
         JSONParser jsonParser = new JSONParser();
         VerificationChecker verificationChecker = new DefaultVerificationChecker(apiFetcher, verificationResponseParser, jsonParser);
 
+        //set up commands
         VerificationCheckCommand checkCommand = new VerificationCheckCommand(this, verificationChecker);
 
         PluginCommand tsverify = Bukkit.getPluginCommand("tsverify");

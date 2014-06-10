@@ -19,6 +19,7 @@ public class MinecraftAccountParserTest {
     private final String uuid = "6ac803fd-132f-4540-a741-cb18ffeed8ce";
     private final long createdAt = 1415440923;
     private final long updatedAt = 1415540923;
+    private final String lastName = "Eluinhost";
 
     @Before
     public void onStartUp() throws ParseException {
@@ -30,6 +31,7 @@ public class MinecraftAccountParserTest {
         account.put("createdAt", createdAt);
         account.put("updatedAt", updatedAt);
         account.put("uuid", uuid);
+        account.put("lastName", lastName);
         return account;
     }
 
@@ -40,6 +42,7 @@ public class MinecraftAccountParserTest {
         assertThat(mcAccount.getUUID().toString().toLowerCase()).isEqualTo(uuid.toLowerCase());
         assertThat(mcAccount.getCreatedAt().getTime()).isEqualTo(createdAt);
         assertThat(mcAccount.getUpdatedAt().getTime()).isEqualTo(updatedAt);
+        assertThat(mcAccount.getLastName()).isEqualTo(lastName);
     }
 
     @Test(expected = ParseException.class)
@@ -86,6 +89,22 @@ public class MinecraftAccountParserTest {
     public void testMissingUUID() throws ParseException {
         HashMap<String, Object> account = getValidMap();
         account.remove("uuid");
+
+        parser.parse(account);
+    }
+
+    @Test(expected = ParseException.class)
+    public void testMissingLastName() throws ParseException {
+        HashMap<String, Object> account = getValidMap();
+        account.remove("lastName");
+
+        parser.parse(account);
+    }
+
+    @Test(expected = ParseException.class)
+    public void testInvalidLastName() throws ParseException {
+        HashMap<String, Object> account = getValidMap();
+        account.put("lastName", 1299);
 
         parser.parse(account);
     }

@@ -19,6 +19,8 @@ public class TeamspeakAccountParser {
      * <p>createdAt: RFC2822 time</p>
      * <p>updatedAt: RFC2822 time</p>
      * <p>uuid: Teamspeak UUID</p>
+     * <p>online: boolean</p>
+     * <p>lastName: String</p>
      * </code>
      * @param map the map to parse
      * @return A parsed TeamspeakAccount
@@ -31,7 +33,19 @@ public class TeamspeakAccountParser {
         }
         String uuid = (String) uuidObject;
 
-        TeamspeakAccount account = new TeamspeakAccount().setUUID(uuid);
+        Object onlineObject = map.get("online");
+        if(onlineObject == null || !(onlineObject instanceof Boolean)) {
+            throw new ParseException("Teamspeak account doesn't contain a valid online node", 0);
+        }
+        Boolean online = (Boolean) onlineObject;
+
+        Object lastNameObject = map.get("lastName");
+        if(lastNameObject == null || !(lastNameObject instanceof String)) {
+            throw new ParseException("Teamspeak account doesn't contain a valid last name node", 0);
+        }
+        String lastName = (String) lastNameObject;
+
+        TeamspeakAccount account = new TeamspeakAccount().setUUID(uuid).setIsOnline(online).setLastName(lastName);
         m_modelParser.addParsedDataToModel(map, account);
         return account;
     }

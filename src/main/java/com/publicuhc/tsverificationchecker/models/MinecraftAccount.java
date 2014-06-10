@@ -8,6 +8,7 @@ import java.util.UUID;
 public class MinecraftAccount extends APIModel {
 
     private UUID m_mcUUID;
+    private String m_lastName;
 
     /**
      * @return the UUID for the account
@@ -18,6 +19,15 @@ public class MinecraftAccount extends APIModel {
 
     public MinecraftAccount setUUID(UUID uuid) {
         m_mcUUID = uuid;
+        return this;
+    }
+
+    public String getLastName() {
+        return m_lastName;
+    }
+
+    public MinecraftAccount setLastName(String lastName) {
+        m_lastName = lastName;
         return this;
     }
 }

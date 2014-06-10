@@ -19,6 +19,7 @@ public class TeamspeakAccountParserTest {
     private final String uuid = "ewo4M0KT59ifNUKEV/FHEqoFCI4=";
     private final long createdAt = 1415440923;
     private final long updatedAt = 1415540923;
+    private final String lastName = "Eluinhost";
 
     @Before
     public void onStartUp() throws ParseException {
@@ -30,6 +31,8 @@ public class TeamspeakAccountParserTest {
         account.put("createdAt", createdAt);
         account.put("updatedAt", updatedAt);
         account.put("uuid", uuid);
+        account.put("lastName", lastName);
+        account.put("online", true);
         return account;
     }
 
@@ -78,6 +81,38 @@ public class TeamspeakAccountParserTest {
     public void testMissingUUID() throws ParseException {
         HashMap<String, Object> account = getValidMap();
         account.remove("uuid");
+
+        parser.parse(account);
+    }
+
+    @Test(expected = ParseException.class)
+    public void testMissingLastName() throws ParseException {
+        HashMap<String, Object> account = getValidMap();
+        account.remove("lastName");
+
+        parser.parse(account);
+    }
+
+    @Test(expected = ParseException.class)
+    public void testInvalidLastName() throws ParseException {
+        HashMap<String, Object> account = getValidMap();
+        account.put("lastName", 1299);
+
+        parser.parse(account);
+    }
+
+    @Test(expected = ParseException.class)
+    public void testMissingOnline() throws ParseException {
+        HashMap<String, Object> account = getValidMap();
+        account.remove("online");
+
+        parser.parse(account);
+    }
+
+    @Test(expected = ParseException.class)
+    public void testInvalidOnline() throws ParseException {
+        HashMap<String, Object> account = getValidMap();
+        account.put("online", 1299);
 
         parser.parse(account);
     }
