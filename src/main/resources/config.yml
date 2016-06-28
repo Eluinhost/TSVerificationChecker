@@ -1,1 +1,2 @@
-baseURL: http://auth.publicuhc.com
+base path: https://auth.uhc.gg/api/v1
+skip update check: false
