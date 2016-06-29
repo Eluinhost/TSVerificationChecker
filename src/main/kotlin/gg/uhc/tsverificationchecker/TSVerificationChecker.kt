@@ -4,10 +4,15 @@ import com.github.kittinunf.fuel.core.FuelError
 import com.github.kittinunf.fuel.core.FuelManager
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.result.Result
+import com.google.common.io.Resources
 import org.bukkit.Server
 import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
+import java.security.KeyStore
+import java.security.cert.CertificateFactory
 import java.util.*
+import javax.net.ssl.SSLContext
+import javax.net.ssl.TrustManagerFactory
 
 const val PERMISSION = "tsverify.command"
 
@@ -20,6 +25,35 @@ class Entry : JavaPlugin() {
         if (!config.getBoolean("skip update check")) {
             server.scheduler.runTaskTimerAsynchronously(this, UpdateManager(this), 0, 60 * 60 * 20)
         }
+
+        // Setup base path for API calls
+        FuelManager.instance.basePath = "https://auth.uhc.gg/api/v1"
+
+        // Add certificate path for StartSSL
+        FuelManager.instance.socketFactory = SSLContext
+            .getInstance("TLS")
+            .apply {init(
+                null,
+                TrustManagerFactory
+                    .getInstance(TrustManagerFactory.getDefaultAlgorithm())
+                    .apply {init(
+                        KeyStore
+                            .getInstance(KeyStore.getDefaultType())
+                            .apply {
+                                load(null, null)
+
+                                val factory = CertificateFactory.getInstance("X.509")
+
+                                arrayOf("ca.pem", "sca.server1.crt")
+                                    .map { Resources.getResource(it).openStream() }
+                                    .map { factory.generateCertificate(it) }
+                                    .forEachIndexed { i, certificate -> setCertificateEntry(i.toString(), certificate) }
+                            }
+                    )}
+                    .trustManagers,
+                null
+            )}
+            .socketFactory
 
         //set up commands
         val checkCommand = VerificationCheckCommand(this, { players, checkType -> Runnable {

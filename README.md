@@ -27,10 +27,7 @@ tsverify.command - default op
 ### Configuration:
 
 ```yaml
-base path: https://auth.uhc.gg/api/v1
 skip update check: false
 ```
     
-`base path` - the base URL for the API, shouldn't need to be changed
-
 `skip update check` - whether to skip checking for updates

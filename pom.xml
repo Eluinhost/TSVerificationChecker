@@ -84,6 +84,8 @@
                 <includes>
                     <include>plugin.yml</include>
                     <include>config.yml</include>
+                    <include>ca.pem</include>
+                    <include>sca.server1.crt</include>
                 </includes>
             </resource>
         </resources>
