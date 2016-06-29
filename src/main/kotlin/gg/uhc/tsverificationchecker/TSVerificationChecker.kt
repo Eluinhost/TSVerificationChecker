@@ -51,15 +51,17 @@ class VerificationCheckException(val error: FuelError) : Exception(error.excepti
     val (request, response, result) = "minecraft_account"
         .httpGet(listOf(
             "type"  to checkType.apiParam,
-            "uuids" to uuids
+            "uuids" to uuids.joinToString(separator = ",") { it.toString().replace("-", "")}
         ))
         .responseObject(ApiResponseParser())
 
     return when (result) {
-        is Result.Success -> result.value
-            .map { it.uuid }
-            .partition { uuids.contains(it) }
-            .let { Pair(it.first.toSet(), it.second.toSet()) }
+        is Result.Success -> {
+            val valid = result.value.map { it.uuid }.toSet()
+            val invalid = uuids.filter { !valid.contains(it) }.toSet()
+
+            Pair(valid, invalid)
+        }
         is Result.Failure -> throw VerificationCheckException(result.error)
     }
 }
